@@ -1,6 +1,6 @@
 # [Django 공부 부분]
 
-**장고 생활코딩 강의 영상 사이트: https://www.inflearn.com/course/django-course#curriculum**
+**장고 생활코딩 강의 영상 사이트: https://www.youtube.com/watch?v=pbKhn2ten9I&list=PLuHgQVnccGMDLp4GH-rgQhVKqqZawlNwG**
 ```
 가나다라
 
