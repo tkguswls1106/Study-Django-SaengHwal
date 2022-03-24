@@ -58,4 +58,6 @@ path('', views.index)  # 사용자가 경로를 지정하지 않고 접속했을
 웹 서버(Web Server): apache, nginx, llS 등등을 사용하며, 1.html 같은 파일을 미리 만들어놔야한다는 단점이 있다. 그래서 정적(static)이다.
 웹 어플리케이션 서버(Web Application Server): django, flask, php, jsp, ROL 등등을 사용하며 변경 사항이 있을시 전체가 공장이 돌아가듯이 한번에 바뀌어 동적(dynamic)이라는것이 장점이다.
 
+HttpResponse(값) 는 다른 함수에서 값을 리턴받아 return HttpResponse(다른 함수의 리턴값) 으로 사용하게 될 경우, 그 다른 함수의 리턴값 안의 문자열을 html코드로 해석하여 출력해준다.
+
 ```
