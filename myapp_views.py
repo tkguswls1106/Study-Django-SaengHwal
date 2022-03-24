@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse
-import random
+from django.views.decorators.csrf import csrf_exempt
 
 # topics라는 리스트를 만들어 만들어둔 딕셔너리들을 그룹핑해준다.
 topics = [
@@ -18,10 +18,13 @@ def HTMLTemplate(articleTag):
     <html>
     <body>
         <h1><a href="/">Django</a></h1>
-        <ol>
+        <ul>
             {ol}
-        </ol>
+        </ul>
         {articleTag}
+        <ul>
+            <li><a href="/create/">create</a></li>
+        </ul>
     </body>
     </html>
     '''
@@ -44,6 +47,14 @@ def read(request, id):
             article = f'<h2>{topic["title"]}</h2>{topic["body"]}'
     return HttpResponse(HTMLTemplate(article))
 
+@csrf_exempt
 def create(request):
-    return HttpResponse('Create')  # HttpResponse()는 http를 이용해서 응답을 하겠다는 의미의 객체이다.
+    article = '''
+        <form action="/create/" method="post">
+            <p><input type="text" name="title" placeholder="title"></p>
+            <p><textarea name="body" placeholder="body"></textarea></p>
+            <p><input type="submit"></p>
+        </form>
+    '''
+    return HttpResponse(HTMLTemplate(article))  # HttpResponse()는 http를 이용해서 응답을 하겠다는 의미의 객체이다.
                                    # 그리고 그 인자로 전송하고싶은 값을 그 안에 적는다.
