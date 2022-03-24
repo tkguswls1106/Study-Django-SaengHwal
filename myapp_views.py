@@ -33,7 +33,8 @@ def index(request):  # 이 함수는 첫번째 파라미터의 인자로 요청�
     <h2>Welcome</h2>
         Hello, Django
     '''
-    return HttpResponse(HTMLTemplate(article))
+    return HttpResponse(HTMLTemplate(article))  # HttpResponse(값) 는 다른 함수에서 값을 리턴받아 return HttpResponse(다른 함수의 리턴값) 으로 사용하게 될 경우,
+                                                # 그 다른 함수의 리턴값 안의 문자열을 html코드로 해석하여 출력해준다.
 
 def read(request, id):
     global topics
