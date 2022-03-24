@@ -60,4 +60,6 @@ path('', views.index)  # 사용자가 경로를 지정하지 않고 접속했을
 
 HttpResponse(값) 는 다른 함수에서 값을 리턴받아 return HttpResponse(다른 함수의 리턴값) 으로 사용하게 될 경우, 그 다른 함수의 리턴값 안의 문자열을 html코드로 해석하여 출력해준다.
 
+form 태그와 method="get" 와 method="post" 에 대한 설명은 도장깨기 파이썬 md 파일에 적어놓았으니 참고하자.
+
 ```
