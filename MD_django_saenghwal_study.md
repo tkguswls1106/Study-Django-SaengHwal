@@ -51,7 +51,7 @@ path('', views.index)  # 사용자가 경로를 지정하지 않고 접속했을
 예를들어 사용자가 http://127.0.0.1:8000/read/shj/ 로 접속을 했다면,
 해당 path는 'admin/'이 아닌 다른 경로인 /read/shj/ 이므로, 접속을 하면 장고는 myproject_urls.py의 path('', include('myapp.urls')) 코드를 바라보게 된다.
 그다음에 myapp_urls.py로 위임하게 되고, myapp_urls.py는 path('read/<id>/', views.read) 코드로 인해 myapp_views.py로 위임을 하게된다.
-결국 myapp_views.p의 read 함수를 불러오게되어 'Read!'+id 인 Read!shj 를 웹사이트 화면에 출력하여 클라이언트에게 보내주게 된다.
+결국 myapp_views.py의 read 함수를 불러오게되어 'Read!'+id 인 Read!shj 를 웹사이트 화면에 출력하여 클라이언트에게 보내주게 된다.
 이렇게 모든 과정이 라우팅이었던 것이다.
 -------------------------------------------------------------------------------------------------
 
