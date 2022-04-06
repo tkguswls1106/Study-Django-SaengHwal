@@ -1,6 +1,7 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from django.views.decorators.csrf import csrf_exempt
 
+nextId = 4
 # topics라는 리스트를 만들어 만들어둔 딕셔너리들을 그룹핑해준다.
 topics = [
     {'id':1, 'title':'routing', 'body':'Routing is ..'},
@@ -48,13 +49,25 @@ def read(request, id):
     return HttpResponse(HTMLTemplate(article))
 
 @csrf_exempt
-def create(request):
-    article = '''
-        <form action="/create/" method="post">
-            <p><input type="text" name="title" placeholder="title"></p>
-            <p><textarea name="body" placeholder="body"></textarea></p>
-            <p><input type="submit"></p>
-        </form>
-    '''
-    return HttpResponse(HTMLTemplate(article))  # HttpResponse()는 http를 이용해서 응답을 하겠다는 의미의 객체이다.
-                                   # 그리고 그 인자로 전송하고싶은 값을 그 안에 적는다.
+def create(request):  # 현재 상태는 그냥 홈페이지 접속해서 create 링크만 누르면 요청 메서드가 'GET'이고,
+                      # 홈페이지 들어가서 create 링크 눌러서 들어가서 빈칸에 정보 입력하고 제출버튼 누르면, 요청 메서드가 'POST'로 설정시켜놓았다.
+    global nextId
+    if request.method == 'GET':
+        article = '''
+            <form action="/create/" method="post">
+                <p><input type="text" name="title" placeholder="title"></p>
+                <p><textarea name="body" placeholder="body"></textarea></p>
+                <p><input type="submit"></p>
+            </form>
+        '''
+        return HttpResponse(HTMLTemplate(article))  # HttpResponse()는 http를 이용해서 응답을 하겠다는 의미의 객체이다.
+                                                    # 그리고 그 인자로 전송하고싶은 값을 그 안에 적는다.
+    elif request.method == 'POST':
+        title = request.POST['title']
+        body = request.POST['body']
+        newTopic = {"id":nextId, "title":title, "body":body}
+        topics.append(newTopic)  # 딕셔너리는 append 사용이 안되지만, topics는 딕셔너리를 그룹핑한 리스트이므로 사용이 가능하다.
+        url = '/read/'+str(nextId)
+        nextId = nextId + 1
+        return redirect(url)  # redirect() 안의 매개변수의 url로 이동해라 라는 뜻이다.
+                              # redirect 리디렉트와 관련된 것은 django_생활코딩 md 파일에 정리해두겠다.
