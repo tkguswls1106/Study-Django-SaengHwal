@@ -5,6 +5,8 @@
 <파이참에서>
 venv\Scripts\activate 입력해서 venv 켜고,
 python manage.py runserver 입력해서 서버를 켜자. (만약에 8000번 포트가 아닌 다른 포트로 접속하고싶다면, 코드 뒤에 8888과 같은 다른 포트번호를 적어주면 된다. 예를들어 python manage.py runserver 8888)
+
+<파이참에서>
 python manage.py startapp myapp 입력해서 myapp이라는 이름의 웹앱을 생성한다.
 
 myproject_settings.py 파일은, 프로젝트를 운영하는데 필요한 여러가지 설정들이 들어가있다.
@@ -62,6 +64,10 @@ HttpResponse(값) 는 다른 함수에서 값을 리턴받아 return HttpRespons
 
 form 태그와 method="get" 와 method="post" 에 대한 설명은 html_css_js md 파일에 적어놓았으니 참고하자.
 
-```
+from django.shortcuts import redirect 하고나서
+redirect() 란, 리다이렉트(리디렉트)란 말 그대로 re(다시) + 지시하다(direct) 다시 지시하는 것을 말한다.
+예를 들어 브라우저가 www.webstone.com/blogA URL을 웹 서버에 요청했다고 하자
+그러면 서버는 HTTP 응답 메시지를 통해 "www.webstone.com/blogB 로 다시 요청해봐!~" 라고 브라우저에게 다른 URL(길, 방향) 을 지시할 수 있는 것을 리다이렉트라 한다.
+이는 인터넷에서 가져온 정보이며, https://webstone.tistory.com/65 사이트에 적혀있다.
 
-생활코딩 Django 강의의 10강까지 영상 시청 및 공부 완료. 관련 필기내용 정리.
+```
