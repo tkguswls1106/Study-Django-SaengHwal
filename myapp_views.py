@@ -15,12 +15,13 @@ def HTMLTemplate(articleTag, id=None):  # id가 입력되지 않았을때를 대
     contextUI = ''  # id가 있을때에만 delete UI버튼을 나오게할것임 => 즉, 홈버튼에서는 delete UI버튼이 안나오도록 만들어볼것임.
     if id != None:
         contextUI = f'''
-                    <li>
+            <li>
                 <form action="/delete/" method="post">
                     <input type="hidden" name="id" value={id}>
                     <input type="submit" value="delete">
                 </form>
             </li>
+            <li><a href = "/update/{id}">update</a></li>
         '''
     ol = ''
     for topic in topics:
@@ -83,6 +84,35 @@ def create(request):  # 현재 상태는 그냥 홈페이지 접속해서 create
         nextId = nextId + 1
         return redirect(url)  # redirect() 안의 매개변수의 url로 이동해라 라는 뜻이다.
                               # redirect 리디렉트와 관련된 것은 django_생활코딩 md 파일에 정리해두겠다.
+
+@csrf_exempt
+def update(request, id):
+    global topics
+    if request.method == 'GET':
+        for topic in topics:
+            if topic['id'] == int(id):
+                selectedTopic = {
+                    "title":topic['title'],
+                    "body":topic['body']
+                }
+        article = f'''
+            <form action="/update/{id}/" method="post">
+                <p><input type="text" name="title" placeholder="title" value={selectedTopic["title"]}></p>
+                <p><textarea name="body" placeholder="body">{selectedTopic['body']}</textarea></p>
+                <p><input type="submit"></p>
+            </form>
+        '''
+        return HttpResponse(HTMLTemplate(article, id))  # HTMLTemplate 함수의 update 부분을 보면 a href 태그로 링크가 걸려있기때문에
+                                                        # 이건 post방식이 아니라 get 방식이다.
+    elif request.method == 'POST':
+        title = request.POST['title']
+        body = request.POST['body']
+        for topic in topics:
+            if topic['id'] == int(id):
+                topic['title'] = title
+                topic['body'] = body
+        return redirect(f'/read/{id}')
+
 
 @csrf_exempt
 def delete(request):
