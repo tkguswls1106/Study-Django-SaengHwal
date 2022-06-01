@@ -34,6 +34,18 @@ manage.py 파일은, 프로젝트를 진행하는데 있어서 필요한 여러�
 기타 나중에 확인해볼 사항 (내가 2022-06-02에 생각한 것임):
 context 변수의 렌더링은 특정 html파일로 해줬는데, 만약 해당 html파일에서 static 폴더내에 위치한 특정 js 파일을 불러온다면,
 해당 js파일에는 {{% for %}} 같은 장고 템플릿 코드를 사용해도 되는지 궁금하다.
+=> 해결:
+html 파일에서, js 파일 내의 코드의 장고 템플릿 코드가 사용될 변수를 script태그로 전역변수로 선언해서 <script type="text/javascript"> var str = "{{ data }}" </script> 처럼 미리 적어놓고,
+그 다음 순서로 <script type="text/javascript" src="{% static 'webapp1/sorting.js' %}"></script> 이렇게 js 파일을 호출한다. 단, js 파일 내에는 장고 템플릿 코드가 사용되어서는 안된다.
+그리고 객체 배열을 전역변수로 선언해줄때는 
+<script type="text/javascript">
+            var all_arr = [];
+            {% for data in data_list %}
+                var ob = {id: "{{ data.id }}", name: "{{ data.name }}", description: "{{ data.description }}", link: "{{ data.link }}", category:"{{ data.category }}", field:"{{ data.field }}", task:"{{ data.task }}", instances:"{{ data.instances }}", num:"{{ data.num }}", tutorial:"{{ data.tutorial }}"};
+                all_arr.push(ob);
+            {% endfor %}
+</script>
+처럼 "{{ data.id }}" 이렇게 키값에 ""를 붙여주어야한다.
 
 ------------------------------------- 5강 코드 및 중요 내용 정리 -------------------------------------
 { 사용자 접속 -> myproject -> myproject_urls.py -> path가 /admin/ 아닌것 확인 ->  path가 비어있으므로 path('', include('myapp.urls')) 사용
